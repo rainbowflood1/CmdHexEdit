@@ -41,16 +41,23 @@ int main(int argc, char** argv) {
 	if (argc == 2) {
 		std::string file_contents = ReadFile(argv[1]);
 		int line = (line_width*lines_visible);
-		std::cout << (scroll)*line << std::endl;
 		for (int i = (scroll-1)*line; i < scroll*line; i++) {
 			if (i%line_width == 0) {
 				std::cout << std::endl;
 			}
-			if (file_contents.size() > (scroll-1)*line) {
-				std::cout << VarToHex<char>(file_contents.c_str()[i]) << " ";
+			if (file_contents.size() > i) {
+				char character = file_contents.c_str()[i];
+				std::string hex_byte = VarToHex<char>(character);
+				// If it is a null character, show it as red
+				if (character == '\x00') {
+					std::cout << "\e[38;2;255;0;0m";
+				}
+
+
+				std::cout << hex_byte << "\e[0m ";
 			} else {
 				// Make it show as gray
-				std::cout << "00" << " ";
+				std::cout << "\e[38;2;100;100;100m00\e[0m" << " ";
 			}
 		}
 
