@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <vector>
 // Define ansi escape codes so that you can use it to change the color of the text
 #define NUM_LINE_OR_COL_COLOR "\e[38;2;255;255;0m"
 #define RESET_COLOR "\e[0m"
@@ -96,7 +98,18 @@ int main(int argc, char** argv) {
 			std::string command;
 			std::getline(std::cin, command);
 
-			std::cout << command << std::endl;
+			std::stringstream cmd(command);
+			std::string cmd_split; // Needs a better name
+
+			std::vector<std::string> cmd_lists;
+
+
+			while (std::getline(cmd, cmd_split, ' ')) {
+				std::cout << cmd_split << std::endl;
+				cmd_lists.push_back(cmd_split);
+			}
+
+			
 		}
 
 	}
