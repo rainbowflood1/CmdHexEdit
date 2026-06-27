@@ -7,6 +7,18 @@
 #define NULL_BYTE_COLOR "\e[38;2;255;0;0m"
 #define END_OF_FILE_COLOR "\e[38;2;100;100;100m"
 
+
+
+// Both Windows and linux uses the same function to run terminal commands (this will be used to clear the terminal before placing the editor)
+#ifdef __WIN__
+#include <Windows.h>
+#define CLEAR_CMD "cls"
+#else
+#include <unistd.h>
+#define CLEAR_CMD "clear"
+#endif
+
+
 template <typename T>
 std::string ToHex(T var) {
 	std::string hex_code = std::format("{:X}", var);
@@ -44,6 +56,7 @@ int scroll = 1;
 int main(int argc, char** argv) {
 	// If there is 1 argument then attempt to open the file
 	if (argc == 2) {
+		system(CLEAR_CMD);
 		std::string file_contents = ReadFile(argv[1]);
 		int lines_length = (line_width*lines_visible);
 		int line_number = 0;
