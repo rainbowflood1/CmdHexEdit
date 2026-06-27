@@ -1,4 +1,4 @@
-# CmdHexEdit A commandline text editor, version 0.1.0
+# CmdHexEdit A commandline text editor, version **0.1.0**
 
 
  
