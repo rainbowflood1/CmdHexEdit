@@ -1,2 +1,4 @@
-# CmdHexEdit
+# CmdHexEdit A commandline text editor
+
+
  
