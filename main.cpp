@@ -36,8 +36,8 @@ std::string ReadFile(std::string filename) {
 }
 
 
-int line_width = 5;
-int lines_visible = 5;
+int line_width = 50;
+int lines_visible = 25;
 int scroll = 1;
 
 
