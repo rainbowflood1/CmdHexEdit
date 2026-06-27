@@ -56,35 +56,47 @@ int scroll = 1;
 int main(int argc, char** argv) {
 	// If there is 1 argument then attempt to open the file
 	if (argc == 2) {
-		system(CLEAR_CMD);
-		std::string file_contents = ReadFile(argv[1]);
-		int lines_length = (line_width*lines_visible);
-		int line_number = 0;
-		// There is a "00: " so add a bunch of spaces to make it so that it is aligned with the hex code below
-		std::cout << "    ";
-		for (int i = 0; i < line_width; i++) {
-			std::cout << NUM_LINE_OR_COL_COLOR << ToHex<int>(i) << RESET_COLOR << " ";
-		}
-		for (int i = (scroll-1)*lines_length; i < scroll*lines_length; i++) {
-			if (i%line_width == 0) {
-				std::cout << std::endl << NUM_LINE_OR_COL_COLOR << ToHex<int>(line_number) << ": " << RESET_COLOR;
-				line_number++;
-
+		while (true) {
+			system(CLEAR_CMD);
+			std::string file_contents = ReadFile(argv[1]);
+			int lines_length = (line_width*lines_visible);
+			int line_number = 0;
+			// There is a "00: " so add a bunch of spaces to make it so that it is aligned with the hex code below
+			std::cout << "    ";
+			for (int i = 0; i < line_width; i++) {
+				std::cout << NUM_LINE_OR_COL_COLOR << ToHex<int>(i) << RESET_COLOR << " ";
 			}
-			if (file_contents.size() > i) {
-				char character = file_contents.c_str()[i];
-				std::string hex_byte = ToHex<char>(character);
-				// If it is a null character, show it as red
-				if (character == '\x00') {
-					std::cout << NULL_BYTE_COLOR;
+			for (int i = (scroll-1)*lines_length; i < scroll*lines_length; i++) {
+				if (i%line_width == 0) {
+					std::cout << std::endl << NUM_LINE_OR_COL_COLOR << ToHex<int>(line_number) << ": " << RESET_COLOR;
+					line_number++;
+
+				}
+				if (file_contents.size() > i) {
+					char character = file_contents.c_str()[i];
+					std::string hex_byte = ToHex<char>(character);
+					// If it is a null character, show it as red
+					if (character == '\x00') {
+						std::cout << NULL_BYTE_COLOR;
+					}
+
+
+					std::cout << hex_byte << RESET_COLOR << " ";
+				} else {
+					// Make it show as gray
+					std::cout << END_OF_FILE_COLOR << "00" << RESET_COLOR << " ";
 				}
 
-
-				std::cout << hex_byte << RESET_COLOR << " ";
-			} else {
-				// Make it show as gray
-				std::cout << END_OF_FILE_COLOR << "00" << RESET_COLOR << " ";
 			}
+			
+
+			// Prompt
+
+			std::cout << std::endl << "> ";
+			std::string command;
+			std::getline(std::cin, command);
+
+			std::cout << command << std::endl;
 		}
 
 	}
