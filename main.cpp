@@ -128,9 +128,9 @@ int main(int argc, char** argv) {
 				
 				file_contents.replace(offset, 1, str_val);
 			} else if (cmd_lists[0] == "sd") { // Scroll down command
-				scroll--;
-			} else if (cmd_lists[0] == "su") { // Scroll up command
 				scroll++;
+			} else if (cmd_lists[0] == "su") { // Scroll up command
+				scroll--;
 			}
 		}
 		return 0;
