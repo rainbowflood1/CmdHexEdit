@@ -94,7 +94,6 @@ int main(int argc, char** argv) {
 				}
 
 			}
-			
 
 			// Prompt
 
@@ -147,10 +146,23 @@ int main(int argc, char** argv) {
 				
 				int offset = (line*line_width)+column;
 
-
 				std::string str_val{value};
 				
-				file_contents.replace(offset, 1, str_val);
+				std::string null_byte{'\x00'};
+
+				if (offset > file_contents.size()) {
+					int dist = offset-file_contents.size();
+					for (int i = 0; i < dist; i++) {
+						if (i == dist-1) {
+							file_contents = file_contents + str_val;
+						} else {
+							file_contents = file_contents + null_byte;
+						}
+					}
+				} else {
+					file_contents.replace(offset, 1, str_val);
+				}
+
 			} else if (cmd_lists[0] == "sd") { // Scroll down command
 				scroll++;
 			} else if (cmd_lists[0] == "su") { // Scroll up command
