@@ -58,9 +58,9 @@ int scroll = 1;
 int main(int argc, char** argv) {
 	// If there is 1 argument then attempt to open the file
 	if (argc == 2) {
+		std::string file_contents = ReadFile(argv[1]);
 		while (true) {
 			system(CLEAR_CMD);
-			std::string file_contents = ReadFile(argv[1]);
 			int lines_length = (line_width*lines_visible);
 			int line_number = 0;
 			// There is a "00: " so add a bunch of spaces to make it so that it is aligned with the hex code below
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
 
 				}
 				if (file_contents.size() > i) {
-					char character = file_contents.c_str()[i];
+					char character = file_contents[i];
 					std::string hex_byte = ToHex<char>(character);
 					// If it is a null character, show it as red
 					if (character == '\x00') {
@@ -105,12 +105,28 @@ int main(int argc, char** argv) {
 
 
 			while (std::getline(cmd, cmd_split, ' ')) {
-				std::cout << cmd_split << std::endl;
 				cmd_lists.push_back(cmd_split);
 			}
 
+			// Interpret the commands
 			
+
+			if (cmd_lists[0] == "exit") {
+				break;
+			} else if (cmd_lists[0] == "modify" || cmd_lists[0] == "m") {
+				int line = std::stoi(cmd_lists[1], 0, 16);
+				int column = std::stoi(cmd_lists[2], 0, 16);
+				char value = std::stoi(cmd_lists[3], 0, 16);
+				
+				int offset = (line*line_width)+column;
+
+
+				std::string str_val{value};
+				
+				file_contents.replace(offset, 1, str_val);
+			}
 		}
+		return 0;
 
 	}
 	
