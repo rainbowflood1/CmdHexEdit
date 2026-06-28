@@ -63,11 +63,14 @@ int main(int argc, char** argv) {
 			system(CLEAR_CMD);
 			int lines_length = (line_width*lines_visible);
 			int line_number = (scroll-1)*lines_visible;
-			// There is a "00: " so add a bunch of spaces to make it so that it is aligned with the hex code below
-			std::cout << "    ";
+			// Add a bunch of spaces to make it so that it is aligned with the hex code below
+			for (int i = 0; i < (ToHex<int>(line_number)+": ").size(); i++) {
+				std::cout << " ";
+			}
 			for (int i = 0; i < line_width; i++) {
 				std::cout << NUM_LINE_OR_COL_COLOR << ToHex<int>(i) << RESET_COLOR << " ";
 			}
+
 			for (int i = (scroll-1)*lines_length; i < scroll*lines_length; i++) {
 				if (i%line_width == 0) {
 					std::cout << std::endl << NUM_LINE_OR_COL_COLOR << ToHex<int>(line_number) << ": " << RESET_COLOR;
