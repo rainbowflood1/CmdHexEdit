@@ -17,7 +17,7 @@
 #define CLEAR_CMD "cls"
 #else
 #include <unistd.h>
-#define CLEAR_CMD "clear"
+#define CLEAR_SCR_CMD "clear"
 #endif
 
 
@@ -59,8 +59,9 @@ int main(int argc, char** argv) {
 	// If there is 1 argument then attempt to open the file
 	if (argc == 2) {
 		std::string file_contents = ReadFile(argv[1]);
+		bool saved = false;
 		while (true) {
-			system(CLEAR_CMD);
+			system(CLEAR_SCR_CMD);
 			int lines_length = (line_width*lines_visible);
 			int line_number = (scroll-1)*lines_visible;
 			// Add a bunch of spaces to make it so that it is aligned with the hex code below
@@ -115,7 +116,30 @@ int main(int argc, char** argv) {
 			
 
 			if (cmd_lists[0] == "exit") {
-				break;
+				// Ask the user if the work must be saved
+				system(CLEAR_SCR_CMD);
+				
+				std::cout << "Would you like to save your work (y or n or cancel)? " << std::endl;
+				std::string option;
+
+				std::getline(std::cin, option);
+				
+				if (option == "y" || option == "Y") {
+					saved = true;
+					break;
+				} else if (option == "n" || option == "N") {
+					saved = false;
+					break;
+				} else {
+					
+				}
+
+				
+
+				
+				
+				
+
 			} else if (cmd_lists[0] == "modify" || cmd_lists[0] == "m") {
 				int line = std::stoi(cmd_lists[1], 0, 16);
 				int column = std::stoi(cmd_lists[2], 0, 16);
@@ -131,8 +155,20 @@ int main(int argc, char** argv) {
 				scroll++;
 			} else if (cmd_lists[0] == "su") { // Scroll up command
 				scroll--;
+			} else if (cmd_lists[0] == "save") {
+				saved = true;
+				break;
 			}
+
+
 		}
+
+		if (saved == true) {
+			std::ofstream file(argv[1]);
+			file << file_contents;
+			file.close();
+		}
+
 		return 0;
 
 	}
