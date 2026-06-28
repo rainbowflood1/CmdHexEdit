@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
 			// Interpret the commands
 			
 
-			if (cmd_lists[0] == "exit") {
+			if (cmd_lists[0] == "exit" || cmd_lists[0] == "close" || cmd_lists[0] == "quit") {
 				// Ask the user if the work must be saved
 				system(CLEAR_SCR_CMD);
 				
