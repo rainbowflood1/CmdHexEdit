@@ -13,7 +13,7 @@
 
 
 // Both Windows and linux uses the same function to run terminal commands (this will be used to clear the terminal before placing the editor)
-#ifdef __WIN__
+#ifdef __WIN32__
 #include <Windows.h>
 #define CLEAR_CMD "cls"
 #else
