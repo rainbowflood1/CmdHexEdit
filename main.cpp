@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
 			file << file_contents;
 			file.close();
 		}
-
+		system(CLEAR_SCR_CMD);
 		return 0;
 
 	}
