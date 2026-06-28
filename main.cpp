@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+
 // Define ansi escape codes so that you can use it to change the color of the text
 #define NUM_LINE_OR_COL_COLOR "\e[38;2;255;255;0m"
 #define RESET_COLOR "\e[0m"
@@ -118,15 +119,15 @@ int main(int argc, char** argv) {
 				// Ask the user if the work must be saved
 				system(CLEAR_SCR_CMD);
 				
-				std::cout << "Would you like to save your work (y or n or cancel)? " << std::endl;
+				std::cout << "Would you like to save your work (y or n or cancel)? \n\n>";
 				std::string option;
 
 				std::getline(std::cin, option);
 				
-				if (option == "y" || option == "Y") {
+				if (std::tolower(option.c_str()[0]) == 'y') {
 					saved = true;
 					break;
-				} else if (option == "n" || option == "N") {
+				} else if (std::tolower(option.c_str()[0]) == 'n') {
 					saved = false;
 					break;
 				} else {
