@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 		while (true) {
 			system(CLEAR_CMD);
 			int lines_length = (line_width*lines_visible);
-			int line_number = 0;
+			int line_number = (scroll-1)*lines_visible;
 			// There is a "00: " so add a bunch of spaces to make it so that it is aligned with the hex code below
 			std::cout << "    ";
 			for (int i = 0; i < line_width; i++) {
@@ -124,6 +124,10 @@ int main(int argc, char** argv) {
 				std::string str_val{value};
 				
 				file_contents.replace(offset, 1, str_val);
+			} else if (cmd_lists[0] == "sd") { // Scroll down command
+				scroll--;
+			} else if (cmd_lists[0] == "su") { // Scroll up command
+				scroll++;
 			}
 		}
 		return 0;
